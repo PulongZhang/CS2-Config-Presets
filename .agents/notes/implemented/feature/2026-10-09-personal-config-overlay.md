@@ -18,7 +18,7 @@ Status: implemented
 
 当前个人值就是全部漂移点，且仅此这些：
 
-- `auto.cfg`：`sensitivity` 1.1545、`fps_max` 300、`crosshair` 0（关闭准星）
+- `auto.cfg`：`sensitivity` 1.1545、`fps_max` 300
 - `crosshair.cfg`：`cl_crosshairsize` 0、`cl_crosshairgap` -5、`cl_crosshairthickness` 1.0、`cl_crosshairdot` 1、`cl_crosshairalpha` 255、`cl_crosshair_drawoutline` 1
 
 其余一律等于上游模板值——包括 `rate` 524288、`cl_crosshair_friendly_warning` 1、`cl_hud_telemetry_frametime_poor` 6.94、`mm_dedicated_search_maxping` 120、`m_yaw` 0.022，以及全部 `snd_*` 音量。这些曾一度被个人化成更宽松的值，已按"废弃默认值/非手调项回归模板"处理。
@@ -29,7 +29,7 @@ Status: implemented
 
 ### 上游同步流程
 
-拉取上游 `master` → 用上游模板覆盖根目录文件 → 重放上面列出的 3 + 6 处个人值 → 提交到 `personal`。这份清单即重放清单，两者必须一起更新。
+拉取上游 `master` → 用上游模板覆盖根目录文件 → 重放上面列出的 2 + 6 处个人值 → 提交到 `personal`。这份清单即重放清单，两者必须一起更新。
 
 ## Alternatives considered
 
@@ -44,6 +44,6 @@ Status: implemented
 
 ## Verification
 
-- `git diff origin/master -- auto.cfg crosshair.cfg` 只输出 `sensitivity`、`fps_max` 与 6 项准星参数，共 9 行。
-- `grep -n '^crosshair' auto.cfg` 输出 `crosshair 0`（关闭准星）。
+- `git diff origin/master -- auto.cfg crosshair.cfg` 只输出 `sensitivity`、`fps_max` 与 6 项准星参数，共 8 行（`git diff --stat` 报 8 insertions / 8 deletions）。
+- `grep -n '^crosshair ' auto.cfg` 输出 `crosshair 1`（启用准星，个人准星由 `crosshair.cfg` 提供）。
 - `git branch -vv` 显示 `personal` 跟踪 `origin/personal`。
