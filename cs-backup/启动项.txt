@@ -1,0 +1,1 @@
+-high -novid -nojoy -refresh 170 +exec auto.cfg -fullscreen -perfectworld -w 1920 -h 1080
