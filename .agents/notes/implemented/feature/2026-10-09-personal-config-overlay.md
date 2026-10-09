@@ -44,6 +44,6 @@ Status: implemented
 
 ## Verification
 
-- `git diff master -- auto.cfg crosshair.cfg` 只输出 `sensitivity`、`fps_max` 与 6 项准星参数，共 9 行。
+- `git diff origin/master -- auto.cfg crosshair.cfg` 只输出 `sensitivity`、`fps_max` 与 6 项准星参数，共 9 行。
 - `grep -n '^crosshair' auto.cfg` 输出 `crosshair 0`（关闭准星）。
 - `git branch -vv` 显示 `personal` 跟踪 `origin/personal`。
