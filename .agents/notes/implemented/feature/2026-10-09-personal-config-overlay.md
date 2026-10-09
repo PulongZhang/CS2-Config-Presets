@@ -18,7 +18,7 @@ Status: implemented
 
 当前个人值就是全部漂移点，且仅此这些：
 
-- `auto.cfg`：`sensitivity` 1.1545、`fps_max` 300
+- `auto.cfg`：`sensitivity` 1.1545、`fps_max` 300，以及开启模板里默认注释掉的两段绑定——`bind c +duck`（C+空格大跳）与 `bind q +jumpthrow`（Q 键跳投，连同其 6 行 `alias`）。这两段是模板自带的可选项，个人选择开启，故计入漂移。
 - `crosshair.cfg`：`cl_crosshairsize` 0、`cl_crosshairgap` -5、`cl_crosshairthickness` 1.0、`cl_crosshairdot` 1、`cl_crosshairalpha` 255、`cl_crosshair_drawoutline` 1
 
 其余一律等于上游模板值——包括 `rate` 524288、`cl_crosshair_friendly_warning` 1、`cl_hud_telemetry_frametime_poor` 6.94、`mm_dedicated_search_maxping` 120、`m_yaw` 0.022，以及全部 `snd_*` 音量。这些曾一度被个人化成更宽松的值，已按"废弃默认值/非手调项回归模板"处理。
@@ -29,7 +29,7 @@ Status: implemented
 
 ### 上游同步流程
 
-拉取上游 `master` → 用上游模板覆盖根目录文件 → 重放上面列出的 2 + 6 处个人值 → 提交到 `personal`。这份清单即重放清单，两者必须一起更新。
+拉取上游 `master` → 用上游模板覆盖根目录文件 → 重放上面列出的 12 + 6 行个人改动 → 提交到 `personal`。这份清单即重放清单，两者必须一起更新。
 
 ## Alternatives considered
 
@@ -39,11 +39,11 @@ Status: implemented
 
 ## Consequences
 
-- **收益**：单一事实来源——根目录文件就是最终生效配置；上游新增指令自动继承；个人漂移点一眼可数（当前 9 行）。
+- **收益**：单一事实来源——根目录文件就是最终生效配置；上游新增指令自动继承；个人漂移点一眼可数（当前 auto.cfg 12 行、crosshair.cfg 6 行）。
 - **代价与已知上限**：上游若改动同一行（例如上游调整 `sensitivity` 默认值、或重排 `crosshair.cfg`），合并即冲突，必须人工重放而非自动覆盖。信号：上游同步后 `git diff` 出现预期外的行，说明漂移清单已过期，本笔记必须同批修正。
 
 ## Verification
 
-- `git diff origin/master -- auto.cfg crosshair.cfg` 只输出 `sensitivity`、`fps_max` 与 6 项准星参数，共 8 行（`git diff --stat` 报 8 insertions / 8 deletions）。
+- `git diff origin/master -- auto.cfg crosshair.cfg` 只输出 `sensitivity`、`fps_max`、大跳/跳投两段（10 行）与 6 项准星参数，共 36 行改动（每处 1 删 1 增，`git diff --stat` 报 18 insertions / 18 deletions）。
 - `grep -n '^crosshair ' auto.cfg` 输出 `crosshair 1`（启用准星，个人准星由 `crosshair.cfg` 提供）。
 - `git branch -vv` 显示 `personal` 跟踪 `origin/personal`。
