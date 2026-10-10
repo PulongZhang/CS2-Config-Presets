@@ -19,6 +19,7 @@ Status: implemented
 当前个人值就是全部漂移点，且仅此这些：
 
 - `auto.cfg`：`sensitivity` 1.1545，以及开启模板里默认注释掉的三段绑定——`bind c +duck`（C+空格大跳）、`bind q +jumpthrow`（Q 键左键跳投）与 `bind h +jumpthrow2`（H 键右键跳投），后两段各连同其 6 行 `alias`（跳投合计 14 行，另加各自小节标题行的"未开启→已开启"字样）。这三段是模板自带的可选项，个人选择开启，故计入漂移。注意 `bind h` 位于模板 `bind h "switchhands"`（切换左右手持枪）之后，同键后者被覆盖——这是模板里该段默认注释掉的原因，个人接受。
+- `auto.cfg`：`cl_hud_telemetry_frametime_show` 与 `cl_hud_telemetry_ping_show` 由模板的 1（仅条件恶劣时显示）改为 2（总是显示），对应"常显 FPS 与延迟"。只改"是否显示"这两条，告警阈值（`cl_hud_telemetry_frametime_poor` 6.94、`cl_hud_telemetry_ping_poor` 100）保持模板值。
 - `crosshair.cfg`：`cl_crosshairsize` 0、`cl_crosshairgap` -5、`cl_crosshairthickness` 1.0、`cl_crosshairdot` 1、`cl_crosshairalpha` 255、`cl_crosshair_drawoutline` 1
 
 其余一律等于上游模板值——包括 `rate` 524288、`cl_crosshair_friendly_warning` 1、`cl_hud_telemetry_frametime_poor` 6.94、`mm_dedicated_search_maxping` 120、`m_yaw` 0.022，以及全部 `snd_*` 音量。这些曾一度被个人化成更宽松的值，已按"废弃默认值/非手调项回归模板"处理。
@@ -29,7 +30,7 @@ Status: implemented
 
 ### 上游同步流程
 
-拉取上游 `master` → 用上游模板覆盖根目录文件 → 重放上面列出的 20 + 6 行个人改动 → 提交到 `personal`。这份清单即重放清单，两者必须一起更新。
+拉取上游 `master` → 用上游模板覆盖根目录文件 → 重放上面列出的 22 + 6 行个人改动 → 提交到 `personal`。这份清单即重放清单，两者必须一起更新。
 
 ## Alternatives considered
 
@@ -39,12 +40,12 @@ Status: implemented
 
 ## Consequences
 
-- **收益**：单一事实来源——根目录文件就是最终生效配置；上游新增指令自动继承；个人漂移点一眼可数（当前 auto.cfg 20 行、crosshair.cfg 6 行）。
+- **收益**：单一事实来源——根目录文件就是最终生效配置；上游新增指令自动继承；个人漂移点一眼可数（当前 auto.cfg 22 行、crosshair.cfg 6 行）。
 - **漂移清单的口径**：只收录有理由的个人值，不收录并入快照时的残留。`fps_max` 即属残留——个人值 300 随 v2.6 快照并入，并非手调手感值，而上游模板自 bb325c3 起为 400，故回归模板值并移出清单。
 - **代价与已知上限**：上游若改动同一行（例如上游调整 `sensitivity` 默认值、或重排 `crosshair.cfg`），合并即冲突，必须人工重放而非自动覆盖。信号：上游同步后 `git diff` 出现预期外的行，说明漂移清单已过期，本笔记必须同批修正。
 
 ## Verification
 
-- `git diff origin/master -- auto.cfg crosshair.cfg` 只输出 `sensitivity`、大跳/跳投三段（18 行）与 6 项准星参数，共 52 行改动（每处 1 删 1 增，`git diff --stat` 报 26 insertions / 26 deletions）。
+- `git diff origin/master -- auto.cfg crosshair.cfg` 只输出 `sensitivity`、大跳/跳投三段（18 行）、两条 telemetry 显示开关（2 行）与 6 项准星参数，共 56 行改动（每处 1 删 1 增，`git diff --stat` 报 28 insertions / 28 deletions）。
 - `grep -n '^crosshair ' auto.cfg` 输出 `crosshair 1`（启用准星，个人准星由 `crosshair.cfg` 提供）。
 - `git branch -vv` 显示 `personal` 跟踪 `origin/personal`。
