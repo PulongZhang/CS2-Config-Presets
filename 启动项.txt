@@ -5,7 +5,7 @@ CS2启动项
 
 推荐启动项
 
--high -novid -nojoy -refresh 240 -threads 8 +exec auto.cfg
+-high -novid -nojoy -refresh 200 +exec auto.cfg -fullscreen -perfectworld -w 1920 -h 1080
 
 
 常用启动项说明：
